@@ -9,7 +9,7 @@ from aes.trees import run
 
 MIN_BOUND = 1
 MAX_BOUND = 20
-FEATURES = 'max_depth', 'min_samples_split', 'max_length'
+FEATURES = 'max_depth', 'min_samples_split', 'max_len'
 NUM_FEATURES = len(FEATURES)
 NUM_GENERATIONS = 100
 NUM_POPULATION = 20
@@ -24,8 +24,12 @@ def initialize(population_size: int, n_features: int, seed: int = 0) -> np.ndarr
 
 
 def score(chromosome: np.ndarray) -> float:
-    params = dict(zip(FEATURES, chromosome))
-    mse = run(**params)
+    max_depth, min_samples_split, max_len = chromosome
+    mse = run(
+        max_depth=max_depth,
+        min_samples_split=min_samples_split,
+        max_len=max_len
+    )
     return mse
 
 def fitness_score(population: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
