@@ -2,9 +2,9 @@ from dataclasses import dataclass, field
 from typing import Callable
 import time
 
-from tqdm.contrib.concurrent import process_map
 import numpy as np
-from aes.trees import run
+from tqdm import tqdm
+from .trees import run
 
 
 MIN_BOUND = 1
@@ -38,7 +38,7 @@ def fitness_score(population: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
     """
 
     population_list = list(map(lambda arr: list(map(int, arr)), population))
-    scores = list(map(score, population_list))
+    scores = list(tqdm(map(score, population_list), total=len(population_list)))
     scores = np.array(scores)
 
     # obtendo indices que ordenam pelo maior score
