@@ -5,7 +5,7 @@ from tqdm.contrib.concurrent import process_map
 from dataclasses import dataclass, field
 import time
 import numpy as np
-from model import run
+from aes.trees import run
 
 
 MIN_BOUND = 1
@@ -26,7 +26,7 @@ def initialize(population_size: int, n_features: int, seed: int = 0) -> np.ndarr
 def score(chromosome: np.ndarray) -> float:
     param_keys = ("epochs", "batch_size", "neurons", "activation", "optimization")
     params = dict(zip(param_keys, chromosome))
-    mse = run_model(params=params, threshold=10, random=42)
+    mse = run(params=params, threshold=10, random=42)
     return mse
 
 def fitness_score(population: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
