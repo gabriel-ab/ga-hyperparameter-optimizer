@@ -1,4 +1,10 @@
+import pandas as pd
 import numpy as np
+
+from aes.cleaners import TextCleaner
+from aes.metrics import mean_squared_error
+from aes.utils import random_split_df
+from aes.vectorizers import TfidfVectorizer
 
 
 class DecisionTreeRegressor:
@@ -79,3 +85,30 @@ class DecisionNode:
 class LeafNode:
     def __init__(self, value):
         self.value_ = np.mean(value)
+
+
+def run(max_depth: int, min_samples_split: int, max_len: int):
+    dataset = pd.read_parquet("data/dataset.parquet")
+    train_set, test_set = random_split_df(dataset, 0.2)
+
+    y_train = train_set["score"].to_list()
+    y_test = test_set["score"].to_list()
+
+    vectorizer = TfidfVectorizer(max_len=max_len)
+    cleaner = TextCleaner()
+
+    train_documents = [cleaner(row["text"]) for _, row in train_set.iterrows()]
+    test_documents = [cleaner(row["text"]) for _, row in test_set.iterrows()]
+
+    vectorizer.fit([cleaner(row["text"]) for _, row in dataset.iterrows()])
+
+    train_encoded_documents = vectorizer.encode(train_documents)
+    test_encoded_documents = vectorizer.encode(test_documents)
+
+    tree = DecisionTreeRegressor(max_depth, min_samples_split)
+    tree.fit(np.array(train_encoded_documents), y_train)
+    y_pred = tree.predict(test_encoded_documents)
+
+    mse = mean_squared_error(y_test, y_pred)
+    
+    return mse
