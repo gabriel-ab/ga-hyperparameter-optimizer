@@ -170,7 +170,7 @@ class LifeBook:
         self.time_passed.append(time_passed)
 
 
-def main(
+def execute(
     n_generations: int = 10,
     population_size: int = 20,
     n_features: int = NUM_FEATURES # -> epochs, batch_size, neurons, activation, optimization
