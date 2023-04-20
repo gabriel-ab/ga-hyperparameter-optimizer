@@ -30,7 +30,6 @@ class TfidfVectorizer:
             terms: list = document.split()
 
             if len(terms) < self.max_len:
-               print("test", len(terms))
                pad = ["<OOV>"] * int(self.max_len - len(terms))
                terms.extend(pad)
 

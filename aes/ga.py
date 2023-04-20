@@ -8,7 +8,7 @@ from aes.trees import run
 
 
 MIN_BOUND = 1
-MAX_BOUND = 20
+MAX_BOUND = 10
 FEATURES = 'max_depth', 'min_samples_split', 'max_len'
 NUM_FEATURES = len(FEATURES)
 NUM_GENERATIONS = 100

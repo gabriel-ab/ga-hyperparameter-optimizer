@@ -88,6 +88,7 @@ class LeafNode:
 
 
 def run(max_depth: int, min_samples_split: int, max_len: int):
+    max_len = max_len * 4 + 20 # domain [20, 60]
     dataset = pd.read_parquet("data/dataset.parquet")
     train_set, test_set = random_split_df(dataset, 0.2)
 
