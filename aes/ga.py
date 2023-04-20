@@ -38,7 +38,7 @@ def fitness_score(population: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
     """
 
     population_list = list(map(lambda arr: list(map(int, arr)), population))
-    scores = process_map(score, population_list, max_workers=8, total=len(population_list))
+    scores = list(map(score, population_list))
     scores = np.array(scores)
 
     # obtendo indices que ordenam pelo maior score
