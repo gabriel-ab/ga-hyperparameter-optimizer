@@ -92,8 +92,8 @@ def run(max_depth: int, min_samples_split: int, max_len: int):
     dataset = pd.read_parquet("data/dataset.parquet")
     train_set, test_set = random_split_df(dataset, 0.2)
 
-    y_train = train_set["score"].to_list()
-    y_test = test_set["score"].to_list()
+    y_train = train_set["score"].to_numpy()
+    y_test = test_set["score"].to_numpy()
 
     vectorizer = TfidfVectorizer(max_len=max_len)
     cleaner = TextCleaner()
