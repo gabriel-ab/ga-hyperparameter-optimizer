@@ -1,16 +1,16 @@
-from typing import Callable
-
-from concurrent.futures import process
-from tqdm.contrib.concurrent import process_map
 from dataclasses import dataclass, field
+from typing import Callable
 import time
+
+from tqdm.contrib.concurrent import process_map
 import numpy as np
 from aes.trees import run
 
 
 MIN_BOUND = 1
 MAX_BOUND = 20
-NUM_FEATURES = 5
+FEATURES = 'max_depth', 'min_samples_split', 'max_length'
+NUM_FEATURES = len(FEATURES)
 NUM_GENERATIONS = 100
 NUM_POPULATION = 20
 
@@ -24,9 +24,8 @@ def initialize(population_size: int, n_features: int, seed: int = 0) -> np.ndarr
 
 
 def score(chromosome: np.ndarray) -> float:
-    param_keys = ("epochs", "batch_size", "neurons", "activation", "optimization")
-    params = dict(zip(param_keys, chromosome))
-    mse = run(params=params, threshold=10, random=42)
+    params = dict(zip(FEATURES, chromosome))
+    mse = run(**params)
     return mse
 
 def fitness_score(population: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
@@ -43,7 +42,7 @@ def fitness_score(population: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
     # inds = np.argsort(scores)[::-1] # decresente
 
     ordered_scores = scores[inds]
-    ordered_population = population[inds, :] 
+    ordered_population = population[inds, :]
 
     return ordered_scores, ordered_population
 
