@@ -10,7 +10,7 @@ class TfidfVectorizer:
         n_documents = len(documents)
         self._init_word_inverse_document_frequency(documents)
         for term, count in self.word_inverse_document_frequency.items():
-            self.word_inverse_document_frequency[term] = math.log(n_documents / count)
+            self.word_inverse_document_frequency[term] = math.log(n_documents / count, 2)
     
     def _init_word_inverse_document_frequency(self, documents: list[str]):
         for document in documents:

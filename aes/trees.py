@@ -84,7 +84,7 @@ class DecisionNode:
 
 class LeafNode:
     def __init__(self, value):
-        self.value_ = np.mean(value)
+        self.value_ = 0 if value.size == 0 else np.mean(value)
 
 
 def run(max_depth: int, min_samples_split: int, max_len: int):
