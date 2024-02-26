@@ -1,2 +1,2 @@
-# ufrpe-ia-project
-Projeto da 2ª VA da disciplina de Inteliogencia Artificial
+# Genetic Algorithm Hyperparameter Optimizer
+Custom hyperparameter optimizer using genetic algorithm
